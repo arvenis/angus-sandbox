@@ -10,7 +10,7 @@ echo "LC_ALL=en_US.utf-8" >> /etc/environment
 
 # Install base packages
 echo "**** Install base packages ***"
-apt-get install -y -qq apt-transport-https ca-certificates curl socat gnupg2 software-properties-common whois python-pip nodejs
+apt-get install -y -qq apt-transport-https ca-certificates curl socat gnupg2 software-properties-common whois python-pip
 
 # Set docker repository
 echo "*** Set docker repository ***"
@@ -24,10 +24,20 @@ echo "*** Set kubectl repository ***"
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
 
+# Set yarn repository
+echo "*** Set yarn repository ***"
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+# Set node repository
+echo "*** Set nodejs repository ***"
+curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
+bash nodesource_setup.sh
+
 # Install docker and kubectl
 echo "*** Install docker and kubectl ***"
 apt-get update
-apt-get install -y -qq docker-ce kubectl
+apt-get install -y -qq docker-ce kubectl nodejs yarn
 
 usermod -aG docker vagrant
 
