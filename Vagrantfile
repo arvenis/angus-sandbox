@@ -3,6 +3,7 @@ Vagrant.configure("2") do |config|
     config.vm.hostname = "angus-vm"
     config.vm.define "angus-vm"
   
+    config.vm.synced_folder "~/.ssh/git", "/home/vagrant/.ssh/git"
     config.vm.network "forwarded_port", guest: 18888, host: 18888
     config.vm.network "forwarded_port", guest: 8888, host: 8888
 

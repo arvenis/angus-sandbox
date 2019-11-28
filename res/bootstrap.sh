@@ -2,9 +2,10 @@
 MINIKUBE_RELEASE=v1.5.2
 
 # Set prompt
-echo "export PS1=\"\[\e[1;91m\]\h:\W $\[\e[0m\] \"" >> .bash_profile
-echo "eval \`ssh-agent\`" >> .bash_profile
-chown vagrant:vagrant .bash_profile
+echo "export PS1=\"\[\e[1;91m\]\h:\W $\[\e[0m\] \"" >> .bashrc
+echo "eval \`ssh-agent\`" >> .bashrc
+echo "ssh-add ~/.ssh/git/id_rsa" >> .bashrc
+chown vagrant:vagrant .bashrc
 
 # Set LANG environments
 echo "LANG=en_US.utf-8" > /etc/environment
