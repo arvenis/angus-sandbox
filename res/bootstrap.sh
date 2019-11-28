@@ -3,6 +3,8 @@ MINIKUBE_RELEASE=v1.5.2
 
 # Set prompt
 echo "export PS1=\"\[\e[1;91m\]\h:\W $\[\e[0m\] \"" >> .bash_profile
+echo "eval \`ssh-agent\`" >> .bash_profile
+chown vagrant:vagrant .bash_profile
 
 # Set LANG environments
 echo "LANG=en_US.utf-8" > /etc/environment
@@ -23,7 +25,7 @@ apt-cache policy docker-ce
 echo "*** Set kubectl repository ***"
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
-
+chown vagrant:vagrant .bash_profile
 # Set yarn repository
 echo "*** Set yarn repository ***"
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
