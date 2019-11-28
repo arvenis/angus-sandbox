@@ -64,7 +64,7 @@ mv aws-iam-authenticator /usr/local/bin
 
 # Install helm
 echo "*** Install helm ***"
-wget -q -O helm.tar.gz https://get.helm.sh/helm-v2.14.0-linux-amd64.tar.gz
+wget -q -O helm.tar.gz https://get.helm.sh/helm-v3.0.0-linux-amd64.tar.gz
 tar -zxf helm.tar.gz
 mv linux-amd64/helm /usr/local/bin/helm
 mv linux-amd64/tiller /usr/local/bin/tiller
