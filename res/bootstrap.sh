@@ -69,3 +69,4 @@ tar -zxf helm.tar.gz
 mv linux-amd64/helm /usr/local/bin/helm
 mv linux-amd64/tiller /usr/local/bin/tiller
 rm helm.tar.gz
+rm -rf linux-amd64
