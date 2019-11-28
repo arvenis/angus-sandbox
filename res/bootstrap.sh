@@ -33,6 +33,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 echo "*** Set nodejs repository ***"
 curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
 bash nodesource_setup.sh
+rm nodesource_setup.sh
 
 # Install docker and kubectl
 echo "*** Install docker and kubectl ***"
