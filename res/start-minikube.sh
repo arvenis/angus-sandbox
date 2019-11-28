@@ -1,5 +1,5 @@
 #!/bin/bash
-minikube start --vm-driver=none --apiserver-ips 127.0.0.1 --apiserver-name localhost
+minikube start --vm-driver=none --apiserver-ips 127.0.0.1 --apiserver-name localhost --kubernetes-version v1.15.6
 minikube version
 minikube update-context
 
