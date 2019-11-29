@@ -34,7 +34,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 
 # Set node repository
 echo "*** Set nodejs repository ***"
-curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
+curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
 bash nodesource_setup.sh
 rm nodesource_setup.sh
 
