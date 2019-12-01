@@ -1,16 +1,6 @@
 #!/bin/bash
 MINIKUBE_RELEASE=v1.5.2
 
-# Set prompt
-echo "export PS1=\"\[\e[1;91m\]\h:\W $\[\e[0m\] \"" >> .bashrc
-echo "eval \`ssh-agent\`" >> .bashrc
-echo "ssh-add ~/.ssh/git/id_rsa" >> .bashrc
-chown vagrant:vagrant .bashrc
-
-# Set LANG environments
-echo "LANG=en_US.utf-8" > /etc/environment
-echo "LC_ALL=en_US.utf-8" >> /etc/environment
-
 # Install base packages
 echo "**** Install base packages ***"
 apt-get install -y -qq apt-transport-https ca-certificates curl socat gnupg2 software-properties-common whois python-pip
@@ -67,6 +57,5 @@ echo "*** Install helm ***"
 wget -q -O helm.tar.gz https://get.helm.sh/helm-v3.0.0-linux-amd64.tar.gz
 tar -zxf helm.tar.gz
 mv linux-amd64/helm /usr/local/bin/helm
-mv linux-amd64/tiller /usr/local/bin/tiller
 rm helm.tar.gz
 rm -rf linux-amd64

@@ -1,0 +1,42 @@
+{{- if (eq .Values.platform "local") }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: fabric-lb
+spec:
+  selector:
+    app: hyperledger
+  ports:
+  - name: fabric-gateway
+    port: 8899
+    targetPort: 8888
+  - name: fabric-ca
+    port: 7054
+    targetPort: 7054
+  - name: fabric-peer
+    port: 7051
+    targetPort: 7051
+  - name: fabric-orderer
+    port: 7050
+    targetPort: 7050
+  type: LoadBalancer
+{{- else}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: fabric-gw
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing  
+    alb.ingress.kubernetes.io/subnets: {{ .Values.subnets }}
+    # alb.ingress.kubernetes.io/security-groups: paycap-fabric-lb-inbound
+spec:
+  rules:
+    - host: "{{ .Release.Namespace }}.{{ .Values.fabricHost }}"
+      http:
+        paths:
+        - path: /*
+          backend:    
+            serviceName: fabric-gateway
+            servicePort: 8888
+{{- end }}

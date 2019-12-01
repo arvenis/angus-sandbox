@@ -1,0 +1,10 @@
+# Default values for paycap fabric 
+platform: local
+caName: ca
+orgCaPath: crypto/peerOrganizations/pps.paycap.net/ca
+# Container specific settings
+FABRIC_CA_SERVER_CA_NAME: ca.paycap.net
+FABRIC_CA_SERVER_CA_CERTFILE: "/etc/hyperledger/fabric/crypto/ca.pps.paycap.net-cert.pem"
+FABRIC_CA_SERVER_CA_KEYFILE:  "/etc/hyperledger/fabric/crypto/ca.pps.paycap.net.key"
+FABRIC_CA_ADMIN: admin
+FABRIC_CA_ADMIN_PW: adminpw

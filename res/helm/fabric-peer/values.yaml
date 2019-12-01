@@ -1,0 +1,22 @@
+# Default values for paycap fabric peer
+platform: local
+peerName: peer0
+networkName: paycap.net
+orgName: pps.paycap.net 
+peerOrgName: peer0.pps.paycap.net
+MSPName: PeerMSP
+# Realtive to mounted crypto folder
+orgMSPPath: crypto/peerOrganizations/pps.paycap.net/peers/peer0.pps.paycap.net
+adminMSPPath: crypto/peerOrganizations/pps.paycap.net/users/Admin@pps.paycap.net
+
+#  Container specific settings
+#
+#  Default  fabric logging 
+FABRIC_LOGGING_SPEC: INFO
+#
+#  Default  chaincode logging
+CORE_CHAINCODE_LOGGING_LEVEL: DEBUG
+#  Others
+CORE_PEER_ADDRESS: peer0:7051
+CORE_PEER_GOSSIP_EXTERNALENDPOINT: peer0:7051
+CORE_PEER_GOSSIP_BOOTSTRAP: peer0:7051

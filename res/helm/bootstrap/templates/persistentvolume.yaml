@@ -1,0 +1,14 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: fabric-pv
+  labels:
+    name: fabric
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hostpath
+  hostPath:
+    path: {{ .Values.hostPath }}
+  capacity:
+      storage: 1Gi
