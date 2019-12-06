@@ -1,8 +1,8 @@
-# Default values for paycap fabric orderer
+# Default values for angus fabric orderer
 platform: local
 ordererName: orderer
 MSPName: PeerMSP
-orgMSPPath: crypto/peerOrganizations/pps.paycap.net/peers/peer0.pps.paycap.net
+orgMSPPath: crypto/peerOrganizations/dev.angus.net/peers/peer0.dev.angus.net
 #
 # Container specific settings
 FABRIC_LOGGING_SPEC: INFO

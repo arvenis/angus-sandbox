@@ -10,19 +10,19 @@ cryptogen generate --output=/etc/hyperledger/fabric/crypto --config=/etc/hyperle
 
 # Rename keyfile
 echo "Rename keyfile"
-mv /etc/hyperledger/fabric/crypto/peerOrganizations/pps.paycap.net/ca/*sk /etc/hyperledger/fabric/crypto/peerOrganizations/pps.paycap.net/ca/ca.pps.paycap.net.key
+mv /etc/hyperledger/fabric/crypto/peerOrganizations/dev.angus.net/ca/*sk /etc/hyperledger/fabric/crypto/peerOrganizations/dev.angus.net/ca/ca.dev.angus.net.key
 
 # 3. generate genesis block for orderer
 echo "Generate genesis block..."
-configtxgen -profile PpsSingleMSPSolo -channelID orderer-system-channel -outputBlock /etc/hyperledger/fabric/blocks/orderer.genesis.block
+configtxgen -profile DevSingleMSPSolo -channelID orderer-system-channel -outputBlock /etc/hyperledger/fabric/blocks/orderer.genesis.block
 # Need for: Orderer
 
 # 4. generate channel configuration transaction
 echo "Generate general channel block..."
-configtxgen -profile PPsSingleMSPChannel -outputCreateChannelTx /etc/hyperledger/fabric/blocks/general-channel.tx -channelID general
+configtxgen -profile DevSingleMSPChannel -outputCreateChannelTx /etc/hyperledger/fabric/blocks/general-channel.tx -channelID general
 # Need for: peer
 
 # 5. generate anchor transaction
 echo "Generate anchor transaction..."
-configtxgen -profile PPsSingleMSPChannel -outputAnchorPeersUpdate /etc/hyperledger/fabric/blocks/PeerMSPanchors.tx -channelID general -asOrg PeerMSP
+configtxgen -profile DevSingleMSPChannel -outputAnchorPeersUpdate /etc/hyperledger/fabric/blocks/PeerMSPanchors.tx -channelID general -asOrg PeerMSP
 # Need for: peer

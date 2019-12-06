@@ -17,8 +17,8 @@ Organizations:
     - &PeerMSP
         Name: PeerMSP
         ID: PeerMSP
-        MSPDir: ../crypto/peerOrganizations/pps.paycap.net/msp
-        Policies: &PpsOrgPolicies
+        MSPDir: ../crypto/peerOrganizations/dev.angus.net/msp
+        Policies: &DevOrgPolicies
             Readers:
                 Type: Signature
                 Rule: "OR('PeerMSP.member')"
@@ -338,21 +338,21 @@ Channel: &ChannelDefaults
 #
 ################################################################################
 Profiles:
-    # Pps specific profiles
+    # Dev specific profiles
 
-    PpsSingleMSPSolo:
+    DevSingleMSPSolo:
         <<: *ChannelDefaults
         Orderer:
             <<: *OrdererDefaults
             Organizations:
                 - *PeerMSP
         Consortiums:
-            PpsConsortium:
+            DevConsortium:
                 Organizations:
                     - *PeerMSP
 
-    PPsSingleMSPChannel:
-        Consortium: PpsConsortium
+    DevSingleMSPChannel:
+        Consortium: DevConsortium
         Application:
             <<: *ApplicationDefaults
             Organizations:

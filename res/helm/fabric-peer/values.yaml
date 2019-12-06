@@ -1,13 +1,13 @@
-# Default values for paycap fabric peer
+# Default values for angus fabric peer
 platform: local
 peerName: peer0
-networkName: paycap.net
-orgName: pps.paycap.net 
-peerOrgName: peer0.pps.paycap.net
+networkName: angus.net
+orgName: dev.angus.net 
+peerOrgName: peer0.dev.angus.net
 MSPName: PeerMSP
 # Realtive to mounted crypto folder
-orgMSPPath: crypto/peerOrganizations/pps.paycap.net/peers/peer0.pps.paycap.net
-adminMSPPath: crypto/peerOrganizations/pps.paycap.net/users/Admin@pps.paycap.net
+orgMSPPath: crypto/peerOrganizations/dev.angus.net/peers/peer0.dev.angus.net
+adminMSPPath: crypto/peerOrganizations/dev.angus.net/users/Admin@dev.angus.net
 
 #  Container specific settings
 #

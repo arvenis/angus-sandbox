@@ -1,10 +1,10 @@
 ---
 name: fabric-network
 version: 1.0.0
-caName: ca.paycap.net
+caName: ca.angus.net
 mspName: PeerMSP
 client:
-    organization: Pps
+    organization: Dev
     connection:
         timeout:
             peer:
@@ -13,23 +13,23 @@ client:
 channels:
     general:
         orderers:
-        - orderer.paycap.net
+        - orderer.angus.net
         peers:
-            peer0.pps.paycap.net: {}
+            peer0.dev.angus.net: {}
 organizations:
-    Pps:
+    Dev:
         mspid: PeerMSP
         peers:
-        - peer0.pps.paycap.net
+        - peer0.dev.angus.net
         certificateAuthorities:
-        - ca.paycap.net
+        - ca.angus.net
 orderers:
-    orderer.paycap.net:
+    orderer.angus.net:
         url: grpc://orderer:7050
 peers:
-    peer0.pps.paycap.net:
+    peer0.dev.angus.net:
         url: grpc://peer0:7051
 certificateAuthorities:
-    ca.paycap.net:
+    ca.angus.net:
         url: http://ca:7054
-        caName: ca.paycap.net
+        caName: ca.angus.net
