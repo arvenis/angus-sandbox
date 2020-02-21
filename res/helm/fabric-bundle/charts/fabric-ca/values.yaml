@@ -1,0 +1,10 @@
+# Default values for angus fabric 
+platform: local
+caName: ca
+orgCaPath: crypto/peerOrganizations/dev.angus.net/ca
+# Container specific settings
+FABRIC_CA_SERVER_CA_NAME: angusCA
+FABRIC_CA_SERVER_CA_CERTFILE: "/etc/hyperledger/fabric/crypto/ca.dev.angus.net-cert.pem"
+FABRIC_CA_SERVER_CA_KEYFILE:  "/etc/hyperledger/fabric/crypto/ca.dev.angus.net.key"
+FABRIC_CA_ADMIN: admin
+FABRIC_CA_ADMIN_PW: adminpw
