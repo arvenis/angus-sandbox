@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-configmap
 data:
-{{ (.Files.Glob "default-keys/*").AsConfig | indent 2 }}  
+{{ (.Files.Glob "default-keys/*").AsConfig | indent 2 }}
+{{ (.Files.Glob "config/*").AsConfig | indent 2 }}
