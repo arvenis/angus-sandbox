@@ -30,27 +30,27 @@ spec:
           mountPath: /etc/hyperledger/fabric/block        
         - name: config
           mountPath: /etc/hyperledger/fabric/config 
-    - name: create-channel
-      image: hyperledger/fabric-tools
-      command: ["peer", "channel", "create", "-o", "orderer:7050", "-c", "general", "-f", "/etc/hyperledger/fabric/block/general-channel.tx", "--outputBlock", "/etc/hyperledger/fabric/blocks/general.block"]
-      env:
-        - name: FABRIC_CFG_PATH
-          value: /etc/hyperledger/fabric/config
-        - name: CORE_PEER_LOCALMSPID
-          value: {{ .Values.MSPName }}
-        - name: CORE_PEER_MSPCONFIGPATH
-          value: /etc/hyperledger/fabric/msp  
-        - name: CORE_PEER_ID
-          value: {{ .Values.peerName }}
-        - name: CORE_PEER_ADDRESS
-          value: {{ .Values.CORE_PEER_ADDRESS }}          
-      volumeMounts:
-        - name: block
-          mountPath: /etc/hyperledger/fabric/block
-        - name: localmsp
-          mountPath: /etc/hyperledger/fabric/msp
-        - name: config
-          mountPath: /etc/hyperledger/fabric/config                                
+    # - name: create-channel
+    #   image: hyperledger/fabric-tools
+    #   command: ["peer", "channel", "create", "-o", "orderer:7050", "-c", "general", "-f", "/etc/hyperledger/fabric/block/general-channel.tx", "--outputBlock", "/etc/hyperledger/fabric/blocks/general.block"]
+    #   env:
+    #     - name: FABRIC_CFG_PATH
+    #       value: /etc/hyperledger/fabric/config
+    #     - name: CORE_PEER_LOCALMSPID
+    #       value: {{ .Values.MSPName }}
+    #     - name: CORE_PEER_MSPCONFIGPATH
+    #       value: /etc/hyperledger/fabric/msp  
+    #     - name: CORE_PEER_ID
+    #       value: {{ .Values.peerName }}
+    #     - name: CORE_PEER_ADDRESS
+    #       value: {{ .Values.CORE_PEER_ADDRESS }}          
+    #   volumeMounts:
+    #     - name: block
+    #       mountPath: /etc/hyperledger/fabric/block
+    #     - name: localmsp
+    #       mountPath: /etc/hyperledger/fabric/msp
+    #     - name: config
+    #       mountPath: /etc/hyperledger/fabric/config                                
   containers:
   - name: couchdb
     image: hyperledger/fabric-couchdb    
