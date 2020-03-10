@@ -6,7 +6,7 @@ spec:
   selector:
     app: hyperledger
     orderer-id: "{{ .Values.ordererName }}"
-  type: LoadBalancer
+  type: ClusterIP
   clusterIP: 10.101.10.2
   ports:
     - name: listen-endpoint

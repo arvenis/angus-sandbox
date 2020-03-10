@@ -8,28 +8,32 @@ metadata:
 
 spec:
   initContainers:
-    - name: create-channel-block
-      image: hyperledger/fabric-tools
-      command: ["configtxgen", "-profile", "DevSingleMSPChannel", "-outputCreateChannelTx", "/etc/hyperledger/fabric/block/general-channel.tx", "-channelID", "general"]
-      env:
-        - name: FABRIC_CFG_PATH
-          value: /etc/hyperledger/fabric/config
-      volumeMounts:
-        - name: block
-          mountPath: /etc/hyperledger/fabric/block        
-        - name: config
-          mountPath: /etc/hyperledger/fabric/config
-    - name: create-anchor-txn
-      image: hyperledger/fabric-tools
-      command: ["configtxgen", "-profile", "DevSingleMSPChannel", "-outputAnchorPeersUpdate", "/etc/hyperledger/fabric/block/PeerMSPanchors.tx", "-channelID", "general", "-asOrg", "PeerMSP"]
-      env:
-        - name: FABRIC_CFG_PATH
-          value: /etc/hyperledger/fabric/config
-      volumeMounts:
-        - name: block
-          mountPath: /etc/hyperledger/fabric/block        
-        - name: config
-          mountPath: /etc/hyperledger/fabric/config 
+    # - name: create-channel-block
+    #   image: hyperledger/fabric-tools
+    #   command: ["configtxgen", "-profile", "DevSingleMSPChannel", "-outputCreateChannelTx", "/etc/hyperledger/fabric/block/general-channel.tx", "-channelID", "general"]
+    #   env:
+    #     - name: FABRIC_CFG_PATH
+    #       value: /etc/hyperledger/fabric/config
+    #   volumeMounts:
+    #     - name: block
+    #       mountPath: /etc/hyperledger/fabric/block  
+    #     - name: localmsp
+    #       mountPath: /etc/hyperledger/fabric/msp                
+    #     - name: config
+    #       mountPath: /etc/hyperledger/fabric/config
+    # - name: create-anchor-txn
+    #   image: hyperledger/fabric-tools
+    #   command: ["configtxgen", "-profile", "DevSingleMSPChannel", "-outputAnchorPeersUpdate", "/etc/hyperledger/fabric/block/PeerMSPanchors.tx", "-channelID", "general", "-asOrg", "PeerMSP"]
+    #   env:
+    #     - name: FABRIC_CFG_PATH
+    #       value: /etc/hyperledger/fabric/config
+    #   volumeMounts:
+    #     - name: block
+    #       mountPath: /etc/hyperledger/fabric/block        
+    #     - name: localmsp
+    #       mountPath: /etc/hyperledger/fabric/msp
+    #     - name: config
+    #       mountPath: /etc/hyperledger/fabric/config 
     # - name: create-channel
     #   image: hyperledger/fabric-tools
     #   command: ["peer", "channel", "create", "-o", "orderer:7050", "-c", "general", "-f", "/etc/hyperledger/fabric/block/general-channel.tx", "--outputBlock", "/etc/hyperledger/fabric/blocks/general.block"]

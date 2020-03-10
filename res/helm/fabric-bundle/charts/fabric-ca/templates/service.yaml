@@ -6,7 +6,7 @@ spec:
   selector:
     app: hyperledger
     ca-id: {{ .Values.caName }}
-  type: LoadBalancer
+  type: ClusterIP
   clusterIP: 10.101.10.1
   ports:
     - name: endpoint

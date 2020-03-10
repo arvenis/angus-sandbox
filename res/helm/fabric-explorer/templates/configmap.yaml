@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  config.json: |
+    {
+      "network-configs": {
+        "network": {
+          "name": "network",
+          "profile": "network.json"
+        }
+      },
+      "license": "Apache-2.0"
+    }

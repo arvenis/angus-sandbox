@@ -1,0 +1,81 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "create-channel-{{.Release.Name}}"
+  labels:
+    app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+    app.kubernetes.io/instance: {{.Release.Name | quote }}
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  activeDeadlineSeconds: 100
+  template:
+    metadata:
+      name: "create-general-channel"
+      labels:
+        app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+        app.kubernetes.io/instance: {{.Release.Name | quote }}
+        helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: create-channel-block
+          image: hyperledger/fabric-tools
+          command: ["/bin/bash"]
+          args: 
+            - "-c" 
+            - "configtxgen -profile DevSingleMSPChannel -outputCreateChannelTx /tmp/general-channel.tx -channelID general &&
+               configtxgen -profile DevSingleMSPChannel -outputAnchorPeersUpdate /tmp/PeerMSPanchors.tx -channelID general -asOrg PeerMSP &&
+               peer channel create -o orderer:7050 -c general -f /tmp/general-channel.tx --outputBlock /tmp/general.block &&
+               peer channel getinfo -c general &&
+               peer channel join -o orderer:7050 -b /tmp/general.block"
+          env:
+            - name: FABRIC_CFG_PATH
+              value: /etc/hyperledger/fabric/config
+            - name: CORE_PEER_LOCALMSPID
+              value: {{ .Values.MSPName }}
+            - name: CORE_PEER_MSPCONFIGPATH
+              value: /etc/hyperledger/fabric/msp
+            - name: CORE_PEER_ADDRESS
+              value: {{ .Values.CORE_PEER_ADDRESS }} 
+            - name: FABRIC_LOGGING_SPEC
+              value: DEBUG                             
+          volumeMounts:
+            - name: localmsp
+              mountPath: /etc/hyperledger/fabric/msp                
+            - name: config
+              mountPath: /etc/hyperledger/fabric/config
+      volumes:
+        - name: localmsp
+        # TODO: convert it to secret
+          configMap:
+            name: {{ .Release.Name }}-configmap
+            items:
+              - key: ca-cert.pem
+                path: cacerts/ca.dev.angus.net-cert.pem
+#              - key: PeerMSP-cert.pem
+#                path: signcerts/peer0.dev.angus.net-cert.pem
+#              - key: PeerMSP-key.pem
+#                path: keystore/PeerMSP-key.pem
+              - key: PeerAdmin-cert.pem
+                path: admincerts/Admin
+              - key: PeerAdmin-cert.pem
+                path: signcerts/Admin
+              - key: PeerAdmin-key.pem
+                path: keystore/Admin
+        - name: config
+          configMap:
+            name: {{ .Release.Name }}-configmap
+            items:
+              - key: configtx.yaml
+                path: configtx.yaml
+              - key: core.yaml
+                path: core.yaml
+            
+            

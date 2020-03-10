@@ -6,7 +6,7 @@ spec:
   selector:
     app: hyperledger
     peer-id: "{{ .Values.peerName }}"
-  type: LoadBalancer
+  type: ClusterIP
   clusterIP: 10.101.10.3
   ports:
     - name: external-listen-endpoint
