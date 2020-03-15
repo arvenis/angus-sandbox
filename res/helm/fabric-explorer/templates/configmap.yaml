@@ -3,13 +3,60 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-configmap
 data:
-  config.json: |
+  first-network.json: |
     {
-      "network-configs": {
-        "network": {
-          "name": "network",
-          "profile": "network.json"
+      "name": "fabric-network",
+      "version": "1.0.0",
+      "caName": "ca.angus.net",
+      "mspName": "PeerMSP",
+      "adminUser": "admin",
+      "adminPassword": "adminpw",
+      "client": {
+        "organization": "Dev",
+        "connection": {
+          "timeout": {
+            "peer": {
+              "endorser": "300"
+            },
+            "orderer": "300"
+          }
         }
       },
-      "license": "Apache-2.0"
+      "channels": {
+        "general": {
+          "orderers": [
+            "orderer.angus.net"
+          ],
+          "peers": {
+            "peer0.dev.angus.net": {}
+          }
+        }
+      },
+      "organizations": {
+        "Dev": {
+          "mspid": "PeerMSP",
+          "peers": [
+            "peer0.dev.angus.net"
+          ],
+          "certificateAuthorities": [
+            "ca.angus.net"
+          ]
+        }
+      },
+      "orderers": {
+        "orderer.angus.net": {
+          "url": "grpc://orderer:7050"
+        }
+      },
+      "peers": {
+        "peer0.dev.angus.net": {
+          "url": "grpc://peer0:7051"
+        }
+      },
+      "certificateAuthorities": {
+        "ca.angus.net": {
+          "url": "http://ca:7054",
+          "caName": "ca.angus.net"
+        }
+      }
     }

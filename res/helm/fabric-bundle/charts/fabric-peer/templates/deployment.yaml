@@ -100,8 +100,8 @@ spec:
     command: ["peer"]
     args: ["node","start","--peer-chaincodedev"]
     volumeMounts:
-    - name: block
-      mountPath: /etc/hyperledger/fabric/block
+#    - name: block
+#      mountPath: /etc/hyperledger/fabric/block
     - name: localmsp
       mountPath: /etc/hyperledger/fabric/msp
     - name: config
@@ -109,8 +109,8 @@ spec:
     - name: run
       mountPath: /host/var/run/
   volumes:
-    - name: block
-      emptyDir: {}
+#    - name: block
+#      emptyDir: {}
     - name: localmsp
     # TODO: convert it to secret
       configMap:

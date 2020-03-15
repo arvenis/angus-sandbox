@@ -42,7 +42,7 @@ spec:
               value: "false"
           volumeMounts:
             - name: config
-              mountPath: /opt/explorer/app/platform/fabric
+              mountPath: /opt/explorer/app/platform/fabric/connection-profile
         - name: {{ .Chart.Name }}-db
           image: hyperledger/explorer-db:latest
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -58,7 +58,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: {{ .Release.Name }}-configmap  
+            name: {{ .Release.Name }}-configmap
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
