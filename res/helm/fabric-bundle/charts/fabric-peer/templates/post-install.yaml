@@ -110,33 +110,19 @@ spec:
         - name: block
           emptyDir: {}    
         - name: localmsp-org
-        # TODO: convert it to secret
           configMap:
             name: {{ .Release.Name }}-configmap
             items:
               - key: ca-cert.pem
                 path: cacerts/ca.dev.angus.net-cert.pem
-    #          - key: PeerMSP-cert.pem
-    #            path: signcerts/peer0.dev.angus.net-cert.pem
-    #          - key: PeerMSP-key.pem
-    #            path: keystore/PeerMSP-key.pem
               - key: PeerAdmin-cert.pem
                 path: admincerts/Admin
-    #              - key: PeerAdmin-cert.pem
-    #                path: signcerts/Admin
-    #              - key: PeerAdmin-key.pem
-    #                path: keystore/Admin
         - name: localmsp-peeradmin
-        # TODO: convert it to secret
           configMap:
             name: {{ .Release.Name }}-configmap
             items:
               - key: ca-cert.pem
                 path: cacerts/ca.dev.angus.net-cert.pem
-    #              - key: PeerMSP-cert.pem
-    #                path: signcerts/peer0.dev.angus.net-cert.pem
-    #              - key: PeerMSP-key.pem
-    #                path: keystore/PeerMSP-key.pem
               - key: PeerAdmin-cert.pem
                 path: admincerts/Admin
               - key: PeerAdmin-cert.pem

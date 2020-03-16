@@ -7,112 +7,59 @@ metadata:
     peer-id: {{ .Values.peerName }}  
 
 spec:
-  initContainers:
-    # - name: create-channel-block
-    #   image: hyperledger/fabric-tools
-    #   command: ["configtxgen", "-profile", "DevSingleMSPChannel", "-outputCreateChannelTx", "/etc/hyperledger/fabric/block/general-channel.tx", "-channelID", "general"]
-    #   env:
-    #     - name: FABRIC_CFG_PATH
-    #       value: /etc/hyperledger/fabric/config
-    #   volumeMounts:
-    #     - name: block
-    #       mountPath: /etc/hyperledger/fabric/block  
-    #     - name: localmsp
-    #       mountPath: /etc/hyperledger/fabric/msp                
-    #     - name: config
-    #       mountPath: /etc/hyperledger/fabric/config
-    # - name: create-anchor-txn
-    #   image: hyperledger/fabric-tools
-    #   command: ["configtxgen", "-profile", "DevSingleMSPChannel", "-outputAnchorPeersUpdate", "/etc/hyperledger/fabric/block/PeerMSPanchors.tx", "-channelID", "general", "-asOrg", "PeerMSP"]
-    #   env:
-    #     - name: FABRIC_CFG_PATH
-    #       value: /etc/hyperledger/fabric/config
-    #   volumeMounts:
-    #     - name: block
-    #       mountPath: /etc/hyperledger/fabric/block        
-    #     - name: localmsp
-    #       mountPath: /etc/hyperledger/fabric/msp
-    #     - name: config
-    #       mountPath: /etc/hyperledger/fabric/config 
-    # - name: create-channel
-    #   image: hyperledger/fabric-tools
-    #   command: ["peer", "channel", "create", "-o", "orderer:7050", "-c", "general", "-f", "/etc/hyperledger/fabric/block/general-channel.tx", "--outputBlock", "/etc/hyperledger/fabric/blocks/general.block"]
-    #   env:
-    #     - name: FABRIC_CFG_PATH
-    #       value: /etc/hyperledger/fabric/config
-    #     - name: CORE_PEER_LOCALMSPID
-    #       value: {{ .Values.MSPName }}
-    #     - name: CORE_PEER_MSPCONFIGPATH
-    #       value: /etc/hyperledger/fabric/msp  
-    #     - name: CORE_PEER_ID
-    #       value: {{ .Values.peerName }}
-    #     - name: CORE_PEER_ADDRESS
-    #       value: {{ .Values.CORE_PEER_ADDRESS }}          
-    #   volumeMounts:
-    #     - name: block
-    #       mountPath: /etc/hyperledger/fabric/block
-    #     - name: localmsp
-    #       mountPath: /etc/hyperledger/fabric/msp
-    #     - name: config
-    #       mountPath: /etc/hyperledger/fabric/config                                
   containers:
-  - name: couchdb
-    image: hyperledger/fabric-couchdb    
-    ports:
-      - containerPort: 5984
+    - name: couchdb
+      image: hyperledger/fabric-couchdb    
+      ports:
+        - containerPort: 5984
 
-  - name: {{ .Values.peerName }}
-    image: hyperledger/fabric-peer:{{ .Chart.AppVersion }}
-    env:
-    - name: FABRIC_CFG_PATH
-      value: /etc/hyperledger/fabric/config
-    - name: CORE_VM_ENDPOINT
-      value: "unix:///host/var/run/docker.sock"
-    - name: CORE_PEER_MSPCONFIGPATH
-      value: /etc/hyperledger/fabric/msp
-    - name: CORE_PEER_ID
-      value: {{ .Values.peerName }}
-    - name: FABRIC_LOGGING_SPEC
-      value: {{ .Values.FABRIC_LOGGING_SPEC }}
-    - name: CORE_CHAINCODE_LOGGING_LEVEL
-      value: {{ .Values.CORE_CHAINCODE_LOGGING_LEVEL }}
-    - name: CORE_PEER_LOCALMSPID
-      value: {{ .Values.MSPName }}
-    - name: CORE_PEER_ADDRESS
-      value: {{ .Values.CORE_PEER_ADDRESS }}
-    - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
-      value: {{ .Values.CORE_PEER_GOSSIP_EXTERNALENDPOINT }}
-    - name: CORE_PEER_GOSSIP_BOOTSTRAP
-      value: {{ .Values.CORE_PEER_GOSSIP_BOOTSTRAP }}
-    - name: CORE_PEER_ADDRESSAUTODETECT
-      value: "true"
-    - name: CORE_LEDGER_STATE_STATEDATABASE
-      value: CouchDB
-    - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-      value: "localhost:5984"
-    - name: CORE_VM_DOCKER_ATTACHSTDOUT
-      value: "true"
-    workingDir: /etc/hyperledger/fabric
-    ports:
-      - containerPort: 7051
-      - containerPort: 7052
-      - containerPort: 7053
-    command: ["peer"]
-    args: ["node","start","--peer-chaincodedev"]
-    volumeMounts:
-#    - name: block
-#      mountPath: /etc/hyperledger/fabric/block
-    - name: localmsp
-      mountPath: /etc/hyperledger/fabric/msp
-    - name: config
-      mountPath: /etc/hyperledger/fabric/config
-    - name: run
-      mountPath: /host/var/run/
+    - name: {{ .Values.peerName }}
+      image: hyperledger/fabric-peer:{{ .Chart.AppVersion }}
+      env:
+        - name: FABRIC_CFG_PATH
+          value: /etc/hyperledger/fabric/config
+        - name: CORE_VM_ENDPOINT
+          value: "unix:///host/var/run/docker.sock"
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /etc/hyperledger/fabric/msp
+        - name: CORE_PEER_ID
+          value: {{ .Values.peerName }}
+        - name: FABRIC_LOGGING_SPEC
+          value: {{ .Values.FABRIC_LOGGING_SPEC }}
+        - name: CORE_CHAINCODE_LOGGING_LEVEL
+          value: {{ .Values.CORE_CHAINCODE_LOGGING_LEVEL }}
+        - name: CORE_PEER_LOCALMSPID
+          value: {{ .Values.MSPName }}
+        - name: CORE_PEER_ADDRESS
+          value: {{ .Values.CORE_PEER_ADDRESS }}
+        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+          value: {{ .Values.CORE_PEER_GOSSIP_EXTERNALENDPOINT }}
+        - name: CORE_PEER_GOSSIP_BOOTSTRAP
+          value: {{ .Values.CORE_PEER_GOSSIP_BOOTSTRAP }}
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
+        - name: CORE_LEDGER_STATE_STATEDATABASE
+          value: CouchDB
+        - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
+          value: "localhost:5984"
+        - name: CORE_VM_DOCKER_ATTACHSTDOUT
+          value: "true"
+      workingDir: /etc/hyperledger/fabric
+      ports:
+        - containerPort: 7051
+        - containerPort: 7052
+        - containerPort: 7053
+      command: ["peer"]
+      args: ["node","start","--peer-chaincodedev"]
+      volumeMounts:
+        - name: localmsp
+          mountPath: /etc/hyperledger/fabric/msp
+        - name: config
+          mountPath: /etc/hyperledger/fabric/config
+        - name: run
+          mountPath: /host/var/run/
   volumes:
-#    - name: block
-#      emptyDir: {}
     - name: localmsp
-    # TODO: convert it to secret
       configMap:
         name: {{ .Release.Name }}-configmap
         items:
