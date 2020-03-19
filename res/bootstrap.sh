@@ -1,8 +1,8 @@
 #!/bin/bash
-MINIKUBE_RELEASE=v1.8.
+MINIKUBE_RELEASE=v1.8.2
 
 # Suppress warning messages
-export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE="true"
+export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 export DEBIAN_FRONTEND=noninteractive
 
 # Install base packages
