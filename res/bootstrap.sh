@@ -1,6 +1,7 @@
 #!/bin/bash
-MINIKUBE_RELEASE=v1.5.2
+MINIKUBE_RELEASE=v1.8.2
 APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE="true"
+DEBIAN_FRONTEND=noninteractiveenv
 
 # Install base packages
 echo "**** Install base packages ***"
