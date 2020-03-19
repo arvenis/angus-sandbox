@@ -21,7 +21,6 @@ apt-cache policy docker-ce
 echo "*** Set kubectl repository ***"
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
-chown vagrant:vagrant .bash_profile
 
 # Set yarn repository
 echo "*** Set yarn repository ***"

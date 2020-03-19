@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "bootstrap", type: "shell", path: "res/bootstrap.sh"
     config.vm.provision "preload-images", type: "shell", path: "res/preload-images.sh"
     config.vm.provision "start-minikube", type: "shell", path: "res/start-minikube.sh"
-    config.vm.provision "deploy-fabric", type: "shell", path: "res/deploy-fabric.sh"
     config.vm.provision "update-files", type: "shell", path: "res/update-files.sh"
+    config.vm.provision "deploy-fabric", type: "shell", path: "res/deploy-fabric.sh", privileged: false
   
   end
