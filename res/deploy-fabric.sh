@@ -1,3 +1,3 @@
 #!/bin/bash
 # Deploy Hyperledger Fabric
-helm upgrade --install fabric helm/fabric-bundle
+helm upgrade --install fabric res/helm/fabric-bundle

@@ -1,7 +1,9 @@
 #!/bin/bash
-MINIKUBE_RELEASE=v1.8.2
-APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE="true"
-DEBIAN_FRONTEND=noninteractiveenv
+MINIKUBE_RELEASE=v1.8.
+
+# Suppress warning messages
+export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE="true"
+export DEBIAN_FRONTEND=noninteractive
 
 # Install base packages
 echo "**** Install base packages ***"
