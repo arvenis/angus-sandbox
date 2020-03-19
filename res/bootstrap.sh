@@ -1,8 +1,10 @@
 #!/bin/bash
 MINIKUBE_RELEASE=v1.5.2
+APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE="true"
 
 # Install base packages
 echo "**** Install base packages ***"
+apt-get update
 apt-get install -y -qq apt-transport-https ca-certificates curl socat gnupg2 software-properties-common whois python-pip
 
 # Set docker repository
