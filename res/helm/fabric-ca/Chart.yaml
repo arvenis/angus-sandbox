@@ -1,8 +1,0 @@
-apiVersion: v1
-appVersion: 1.4.4
-description: Angus Fabric CA chart
-name: fabric-ca
-version: 1.0.0
-maintainers:
-  - name: Istvan Banfi
-    email: ibanfi@gmail.com

@@ -3,7 +3,6 @@ Vagrant.configure("2") do |config|
     config.vm.hostname = "angus-vm"
     config.vm.define "angus-vm"
   
-    config.vm.synced_folder "~/.ssh/git", "/home/vagrant/.ssh/git"
     config.vm.network "forwarded_port", guest: 18888, host: 18888
     config.vm.network "forwarded_port", guest: 8888, host: 8888
 
@@ -15,7 +14,9 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision "copy-files", type: "file", source: "res", destination: "$HOME/res"
     config.vm.provision "bootstrap", type: "shell", path: "res/bootstrap.sh"
+    config.vm.provision "preload-images", type: "shell", path: "res/preload-images.sh"
     config.vm.provision "start-minikube", type: "shell", path: "res/start-minikube.sh"
+    config.vm.provision "deploy-fabric", type: "shell", path: "res/deploy-fabric.sh"
     config.vm.provision "update-files", type: "shell", path: "res/update-files.sh"
   
   end

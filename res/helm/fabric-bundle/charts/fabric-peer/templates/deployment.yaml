@@ -21,7 +21,7 @@ spec:
         - name: CORE_VM_ENDPOINT
           value: "unix:///host/var/run/docker.sock"
         - name: CORE_PEER_MSPCONFIGPATH
-          value: /etc/hyperledger/fabric/msp
+          value: /etc/hyperledger/fabqric/msp
         - name: CORE_PEER_ID
           value: {{ .Values.peerName }}
         - name: FABRIC_LOGGING_SPEC

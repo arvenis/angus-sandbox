@@ -1,9 +1,0 @@
-# Default values for angus fabric client
-platform: local
-MSPName: PeerMSP
-MSPPath: crypto/peerOrganizations/dev.angus.net/users/Admin@dev.angus.net
-
-CORE_CHAINCODE_LOGGING_LEVEL: DEBUG
-FABRIC_LOGGING_SPEC: INFO
-CORE_PEER_ID: peer0
-CORE_PEER_ADDRESS: peer0:7051
