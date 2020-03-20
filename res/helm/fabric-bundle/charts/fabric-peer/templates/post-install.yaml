@@ -13,13 +13,14 @@ metadata:
     "helm.sh/hook": post-install
     "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
+    # "helm.sh/hook-delete-timeout": "10"
 spec:
   template:
     spec:
-      restartPolicy: Never
+      restartPolicy: OnFailure
       containers:
         - name: create-channel-block
-          image: hyperledger/fabric-tools
+          image: hyperledger/fabric-tools:1.4.4
           command: ["configtxgen"]
           args: ["-profile","DevSingleMSPChannel","-configPath","/etc/hyperledger/fabric/config","-outputCreateChannelTx","/etc/hyperledger/fabric/block/general-channel.tx","-channelID","general"]
           env:
@@ -41,7 +42,7 @@ spec:
             - name: config
               mountPath: /etc/hyperledger/fabric/config
         - name: create-anchor-block
-          image: hyperledger/fabric-tools
+          image: hyperledger/fabric-tools:1.4.4
           command: ["configtxgen"]
           args: ["-profile","DevSingleMSPChannel","-configPath","/etc/hyperledger/fabric/config","-outputAnchorPeersUpdate","/etc/hyperledger/fabric/block/PeerMSPanchors.tx","-channelID","general","-asOrg","PeerMSP"]
           env:
@@ -63,7 +64,7 @@ spec:
             - name: config
               mountPath: /etc/hyperledger/fabric/config
         - name: create-peer-channel
-          image: hyperledger/fabric-tools
+          image: hyperledger/fabric-tools:1.4.4
           command: ["peer"]
           args: ["channel","create","-o","orderer:7050","-c","general","-f","/etc/hyperledger/fabric/block/general-channel.tx","--outputBlock","/etc/hyperledger/fabric/block/general.block"]
           env:
@@ -85,7 +86,7 @@ spec:
             - name: config
               mountPath: /etc/hyperledger/fabric/config
         - name: join-peer-channel
-          image: hyperledger/fabric-tools
+          image: hyperledger/fabric-tools:1.4.4
           command: ["peer"]
           args: ["channel","join","-o","orderer:7050","-b","/etc/hyperledger/fabric/block/general.block"]
           env:

@@ -1,5 +1,5 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
   labels:
@@ -7,29 +7,41 @@ metadata:
     ca-id: {{ .Values.caName }}
 
 spec:
-  containers:
-  - name: {{ .Values.caName }}
-    image: hyperledger/fabric-ca:{{ .Chart.AppVersion }}
-    env:
-    - name: FABRIC_CA_SERVER_CA_CERTFILE
-      value: /etc/hyperledger/fabric-ca-server/crypto/ca-cert.pem
-    - name: FABRIC_CA_SERVER_CA_KEYFILE
-      value: /etc/hyperledger/fabric-ca-server/crypto/ca-key.pem
-    ports:
-    - containerPort: 7054
-    command:  ["/bin/sh"]
-    args: ["-c", "fabric-ca-server start -b {{ .Values.FABRIC_CA_ADMIN}}:{{ .Values.FABRIC_CA_ADMIN_PW }} --cfg.identities.allowremove"]
-    volumeMounts:
-    - name: localmsp
-      mountPath: /etc/hyperledger/fabric-ca-server/crypto
-  volumes:
-  - name: localmsp
-  # TODO: convert it to secret
-    configMap:
-      name: {{ .Release.Name }}-configmap
-      items:
-      - key: ca-cert.pem
-        path: ca-cert.pem
-      - key: ca-key.pem
-        path: ca-key.pem
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Chart.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}  
+    spec:
+      serviceAccountName: fabric
+      containers:
+      - name: {{ .Values.caName }}
+        image: hyperledger/fabric-ca:{{ .Chart.AppVersion }}
+        env:
+        - name: FABRIC_CA_SERVER_CA_CERTFILE
+          value: /etc/hyperledger/fabric-ca-server/crypto/ca-cert.pem
+        - name: FABRIC_CA_SERVER_CA_KEYFILE
+          value: /etc/hyperledger/fabric-ca-server/crypto/ca-key.pem
+        ports:
+        - containerPort: 7054
+        command:  ["/bin/sh"]
+        args: ["-c", "fabric-ca-server start -b {{ .Values.FABRIC_CA_ADMIN}}:{{ .Values.FABRIC_CA_ADMIN_PW }} --cfg.identities.allowremove"]
+        volumeMounts:
+        - name: localmsp
+          mountPath: /etc/hyperledger/fabric-ca-server/crypto
+      volumes:
+      - name: localmsp
+      # TODO: convert it to secret
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items:
+          - key: ca-cert.pem
+            path: ca-cert.pem
+          - key: ca-key.pem
+            path: ca-key.pem
 

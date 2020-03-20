@@ -4,9 +4,9 @@ metadata:
   name: orderer
 spec:
   selector:
-    app: hyperledger
-    orderer-id: "{{ .Values.ordererName }}"
-  type: ClusterIP
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }} 
+  type: NodePort
   clusterIP: 10.101.10.2
   ports:
     - name: listen-endpoint

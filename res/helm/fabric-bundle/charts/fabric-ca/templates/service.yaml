@@ -4,8 +4,8 @@ metadata:
   name: {{ .Values.caName }}
 spec:
   selector:
-    app: hyperledger
-    ca-id: {{ .Values.caName }}
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}  
   type: ClusterIP
   clusterIP: 10.101.10.1
   ports:
