@@ -4,6 +4,7 @@ metadata:
   name: fabric-cli
 
 spec:
+  serviceAccountName: fabric
   containers:
     - name: fabric-cli
       image: hyperledger/fabric-tools:1.4.4
