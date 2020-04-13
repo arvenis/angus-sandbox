@@ -15,10 +15,10 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded
     # "helm.sh/hook-delete-timeout": "10"
 spec:
+  backoffLimit: 10
   template:
     spec:
       restartPolicy: OnFailure
-      backoffLimit: 10
       containers:
         - name: create-channel-block
           image: hyperledger/fabric-tools:1.4.4
