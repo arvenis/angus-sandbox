@@ -19,9 +19,9 @@ Vagrant.configure("2") do |config|
     
     Congratulations, you've created a working Hyperledger Fabric environment! 
   
-    Let's access it via
-    
-    vagrant ssh
+    Let's access it via 'vagrant ssh' and verify the environment using 'fcli peer channel list'
+
+    If you got 'general', you can open a bottle, you deserve it! ;-)
         
     MESSAGE
   
