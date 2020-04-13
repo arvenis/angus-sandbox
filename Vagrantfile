@@ -16,11 +16,15 @@ Vagrant.configure("2") do |config|
     config.vm.provision "update-files", type: "shell", path: "/opt/resources/update-files.sh"
     config.vm.provision "deploy-fabric", type: "shell", path: "/opt/resources/deploy-fabric.sh", privileged: false
 
-    config.vm.post_up_message "Well done, amigo - you've created a working Hyperledger Fabric environment! \n
-    Congratulations! \n
-    \n
-    You can access it using 'vagrant ssh' command. \n
-    \n
-    Enjoy!"
+    config.vm.post_up_message = <<-MESSAGE
+    Well done, amigo! 
+    
+    Congratulations, you've created a working Hyperledger Fabric environment! 
+  
+    Let's access it via
+    
+    vagrant ssh
+        
+    MESSAGE
   
   end
