@@ -1,5 +1,7 @@
 #!/bin/bash
 MINIKUBE_RELEASE=v1.8.2
+NODE_RELEASE=10.x
+HELM_RELEASE=3.0.0
 
 # Suppress warning messages
 export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
@@ -29,7 +31,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 
 # Set node repository
 echo "*** Set nodejs repository ***"
-curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
+curl -sL https://deb.nodesource.com/setup_$NODE_RELEASE -o nodesource_setup.sh
 bash nodesource_setup.sh
 rm nodesource_setup.sh
 
@@ -47,19 +49,9 @@ chmod +x minikube
 install minikube /usr/local/bin
 rm minikube
 
-# Install AWSCLI
-echo "*** Install AWSCLI ***"
-pip install awscli
-
-# Install aws-iam-authenticator
-echo "*** Install aws-iam-authenticator ***"
-wget -q -O aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator
-chmod +x aws-iam-authenticator
-mv aws-iam-authenticator /usr/local/bin
-
 # Install helm
 echo "*** Install helm ***"
-wget -q -O helm.tar.gz https://get.helm.sh/helm-v3.0.0-linux-amd64.tar.gz
+wget -q -O helm.tar.gz https://get.helm.sh/helm-v$HELM_RELEASE-linux-amd64.tar.gz
 tar -zxf helm.tar.gz
 mv linux-amd64/helm /usr/local/bin/helm
 rm helm.tar.gz
