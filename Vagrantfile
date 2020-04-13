@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--audio", "none"]
       vb.memory = 4096      
     end
-
+    config.vm.provision "makedir", type: "shell", inline: "mkdir /opt/resources"
     config.vm.provision "copy-files", type: "file", source: "res", destination: "/opt/resources"
     config.vm.provision "bootstrap", type: "shell", path: "/opt/resources/bootstrap.sh"
     config.vm.provision "preload-images", type: "shell", path: "/opt/resources/preload-images.sh"
