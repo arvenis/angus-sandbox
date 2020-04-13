@@ -18,6 +18,7 @@ spec:
   template:
     spec:
       restartPolicy: OnFailure
+      backoffLimit: 10
       containers:
         - name: create-channel-block
           image: hyperledger/fabric-tools:1.4.4

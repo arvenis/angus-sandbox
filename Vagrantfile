@@ -8,13 +8,11 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--audio", "none"]
       vb.memory = 4096      
     end
-    config.vm.provision "makedir", type: "shell", inline: "mkdir /opt/resources"
-    config.vm.provision "copy-files", type: "file", source: "res", destination: "/opt/resources"
-    config.vm.provision "bootstrap", type: "shell", path: "/opt/resources/bootstrap.sh"
-    config.vm.provision "preload-images", type: "shell", path: "/opt/resources/preload-images.sh"
-    config.vm.provision "start-minikube", type: "shell", path: "/opt/resources/start-minikube.sh"
-    config.vm.provision "update-files", type: "shell", path: "/opt/resources/update-files.sh"
-    config.vm.provision "deploy-fabric", type: "shell", path: "/opt/resources/deploy-fabric.sh", privileged: false
+    config.vm.provision "bootstrap", type: "shell", path: "res/bootstrap.sh"
+    config.vm.provision "start-minikube", type: "shell", inline: "sudo minikube start --vm-driver=none --apiserver-ips 127.0.0.1 --apiserver-name localhost"
+    config.vm.provision "update-files", type: "shell", path: "res/update-files.sh"
+    config.vm.provision "copy-charts", type: "file", source: "res/helm/", destination: "helm"
+    config.vm.provision "deploy-fabric", type: "shell", inline: "helm upgrade --install fabric helm/fabric-bundle", privileged: false        
 
     config.vm.post_up_message = <<-MESSAGE
     Well done, amigo! 

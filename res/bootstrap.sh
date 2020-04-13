@@ -42,7 +42,7 @@ apt-get install -y -qq docker-ce kubectl nodejs yarn
 
 usermod -aG docker vagrant
 
-# Install and start minikube
+# Install minikube
 echo "*** Install and start minikube ***"
 wget -q -O minikube https://storage.googleapis.com/minikube/releases/$MINIKUBE_RELEASE/minikube-linux-amd64
 chmod +x minikube

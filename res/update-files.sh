@@ -10,7 +10,7 @@ cp -r /root/.minikube /home/vagrant
 # Set prompt
 echo "export PS1=\"\[\e[1;91m\]\h:\W $\[\e[0m\] \"" >> .bashrc
 echo "alias fcli='kubectl exec -it fabric-cli --'" >> .bashrc
-echo "alias start-minikube='sudo /opt/resources/start-minikube.sh'"
+echo "alias start-minikube='sudo minikube start --vm-driver=none --apiserver-ips 127.0.0.1 --apiserver-name localhost'"
 
 # Set LANG environments
 echo "LANG=en_US.utf-8" > /etc/environment
