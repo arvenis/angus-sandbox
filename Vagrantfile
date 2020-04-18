@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "generic/debian9"
-    config.vm.hostname = "angus-vm"
-    config.vm.define "angus-vm"
+    config.vm.hostname = "angusy-vm"
+    config.vm.define "angusy-vm"
   
     config.vm.provider "virtualbox" do |vb|
       # OSX workaround - disable microphone access
@@ -15,9 +15,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "deploy-fabric", type: "shell", inline: "helm upgrade --install fabric helm/fabric-bundle", privileged: false        
 
     config.vm.post_up_message = <<-MESSAGE
-    Well done, amigo! 
-    
-    Congratulations, you've created a working Hyperledger Fabric environment! 
+    Well done, amigo! Your Hyperledger Fabric environment is up and running! 
   
     Let's access it via 'vagrant ssh' and verify the environment using 'fcli peer channel list'
 

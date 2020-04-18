@@ -75,9 +75,9 @@ spec:
             name: {{ .Release.Name }}-configmap
             items:
               - key: ca-cert.pem
-                path: cacerts/ca.dev.angus.net-cert.pem
+                path: cacerts/ca.dev.angusy.net-cert.pem
               - key: PeerMSP-cert.pem
-                path: signcerts/peer0.dev.angus.net-cert.pem
+                path: signcerts/peer0.dev.angusy.net-cert.pem
               - key: PeerMSP-key.pem
                 path: keystore/PeerMSP-key.pem
               - key: PeerAdmin-cert.pem
