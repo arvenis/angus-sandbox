@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: hyperledger
+    orderer-id: {{ .Values.ordererName }}  
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Chart.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }} 
+    spec:
+      serviceAccountName: fabric
+      initContainers:
+        - name: create-genesis-block
+          image: hyperledger/fabric-tools
+          command: ["configtxgen", "-profile", "DevSingleMSPSolo", "-channelID", "orderer-system-channel", "-outputBlock", "/etc/hyperledger/fabric/block/orderer.genesis.block"]
+          env:
+            - name: FABRIC_CFG_PATH
+              value: /etc/hyperledger/fabric/config
+          volumeMounts:
+            - name: block
+              mountPath: /etc/hyperledger/fabric/block 
+            - name: localmsp
+              mountPath: /etc/hyperledger/fabric/msp                 
+            - name: config
+              mountPath: /etc/hyperledger/fabric/config
+      containers:
+        - name: orderer
+          image: hyperledger/fabric-orderer:{{ .Chart.AppVersion }}      
+          env:
+            - name: FABRIC_CFG_PATH
+              value: /etc/hyperledger/fabric/config
+            - name: ORDERER_GENERAL_LOGLEVEL
+              value: {{ .Values.ORDERER_GENERAL_LOGLEVEL }}
+            - name: FABRIC_LOGGING_SPEC
+              value: {{ .Values.FABRIC_LOGGING_SPEC }}
+            - name: ORDERER_GENERAL_LISTENADDRESS
+              value: 0.0.0.0
+            - name: ORDERER_GENERAL_GENESISMETHOD
+              value: file
+            - name: ORDERER_GENERAL_GENESISFILE
+              value: /etc/hyperledger/fabric/block/orderer.genesis.block
+            - name: ORDERER_GENERAL_LOCALMSPID
+              value: {{ .Values.MSPName }}
+            - name: ORDERER_GENERAL_LOCALMSPDIR
+              value: /etc/hyperledger/fabric/msp
+            - name: ORDERER_GENERAL_TLS_ENABLED
+              value: "false"
+          workingDir: /etc/hyperledger/fabric
+          ports:
+          - containerPort: 7050
+          command: ["orderer"]
+          volumeMounts:
+            - name: block
+              mountPath: /etc/hyperledger/fabric/block
+            - name: localmsp
+              mountPath: /etc/hyperledger/fabric/msp
+            - name: config
+              mountPath: /etc/hyperledger/fabric/config
+      volumes:
+        - name: block
+          emptyDir: {}
+        - name: localmsp
+        # TODO: convert it to secret
+          configMap:
+            name: {{ .Release.Name }}-configmap
+            items:
+              - key: ca-cert.pem
+                path: cacerts/ca.dev.angusy.net-cert.pem
+              - key: PeerMSP-cert.pem
+                path: signcerts/peer0.dev.angusy.net-cert.pem
+              - key: PeerMSP-key.pem
+                path: keystore/PeerMSP-key.pem
+              - key: PeerAdmin-cert.pem
+                path: admincerts/Admin
+        - name: config
+          configMap:
+            name: {{ .Release.Name }}-configmap
+            items:
+              - key: configtx.yaml
+                path: configtx.yaml
+              - key: orderer.yaml
+                path: orderer.yaml

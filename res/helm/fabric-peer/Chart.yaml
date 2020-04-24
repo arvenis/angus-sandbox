@@ -1,8 +1,0 @@
-apiVersion: v1
-appVersion: 1.4.1
-description: angus Fabric chart for peers
-name: fabric-peer
-version: 1.0.0
-maintainers:
-  - name: Istvan Banfi
-    email: ibanfi@gmail.com

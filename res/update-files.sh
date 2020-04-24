@@ -9,11 +9,13 @@ cp -r /root/.minikube /home/vagrant
 
 # Set prompt
 echo "export PS1=\"\[\e[1;91m\]\h:\W $\[\e[0m\] \"" >> .bashrc
-# Add git ssh key
-echo "eval \`ssh-agent\`" >> .bashrc
-echo "ssh-add ~/.ssh/git/id_rsa" >> .bashrc
-# Add alias
 echo "alias fcli='kubectl exec -it fabric-cli --'" >> .bashrc
+echo "alias start-minikube='sudo minikube start --vm-driver=none --apiserver-ips 127.0.0.1 --apiserver-name localhost'" >> .bashrc
+
+# Set internal HLF nodes
+echo "10.101.10.1     ca" >> /etc/hosts
+echo "10.101.10.2     orderer" >> /etc/hosts
+echo "10.101.10.3     peer0" >> /etc/hosts
 
 # Set LANG environments
 echo "LANG=en_US.utf-8" > /etc/environment
@@ -24,6 +26,3 @@ chown -R vagrant:vagrant .
 
 # Set timezone
 timedatectl set-timezone Europe/Budapest
-
-# Move fabric-network to home
-mv res/network .

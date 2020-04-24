@@ -1,0 +1,22 @@
+# Default values for angusy fabric peer
+platform: local
+peerName: peer0
+networkName: angusy.net
+orgName: dev.angusy.net 
+peerOrgName: peer0.dev.angusy.net
+MSPName: PeerMSP
+# Realtive to mounted crypto folder
+orgMSPPath: crypto/peerOrganizations/dev.angusy.net/peers/peer0.dev.angusy.net
+adminMSPPath: crypto/peerOrganizations/dev.angusy.net/users/Admin@dev.angusy.net
+
+#  Container specific settings
+#
+#  Default  fabric logging 
+FABRIC_LOGGING_SPEC: INFO
+#
+#  Default  chaincode logging
+CORE_CHAINCODE_LOGGING_LEVEL: DEBUG
+#  Others
+CORE_PEER_ADDRESS: peer0:7051
+CORE_PEER_GOSSIP_EXTERNALENDPOINT: peer0:7051
+CORE_PEER_GOSSIP_BOOTSTRAP: peer0:7051

@@ -1,0 +1,8 @@
+apiVersion: v1
+appVersion: 1.4.4
+description: Angusy Fabric chart for orderer
+name: fabric-orderer
+version: 1.0.0
+maintainers:
+  - name: Istvan Banfi
+    email: ibanfi@gmail.com
