@@ -23,6 +23,8 @@ spec:
       - name: {{ .Values.caName }}
         image: hyperledger/fabric-ca:{{ .Chart.AppVersion }}
         env:
+        - name: FABRIC_CA_SERVER_CA_NAME
+          value: {{ .Values.FABRIC_CA_SERVER_CA_NAME }}
         - name: FABRIC_CA_SERVER_CA_CERTFILE
           value: /etc/hyperledger/fabric-ca-server/crypto/ca-cert.pem
         - name: FABRIC_CA_SERVER_CA_KEYFILE

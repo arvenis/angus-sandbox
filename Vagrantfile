@@ -3,6 +3,7 @@ Vagrant.configure("2") do |config|
     config.vm.hostname = "angusy-vm"
     config.vm.define "angusy-vm"
   
+    config.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh"
     config.vm.provider "virtualbox" do |vb|
       # OSX workaround - disable microphone access
       vb.customize ["modifyvm", :id, "--audio", "none"]
