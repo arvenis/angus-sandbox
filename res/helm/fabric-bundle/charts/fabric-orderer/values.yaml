@@ -1,4 +1,4 @@
-# Default values for angusy fabric orderer
+# Default values for angus fabric orderer
 ordererName: orderer
 MSPName: PeerMSP
 #

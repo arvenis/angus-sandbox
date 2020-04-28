@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "generic/debian9"
-    config.vm.hostname = "angusy-vm"
-    config.vm.define "angusy-vm"
+    config.vm.hostname = "angus-vm"
+    config.vm.define "angus-vm"
   
     config.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh"
     config.vm.provider "virtualbox" do |vb|
