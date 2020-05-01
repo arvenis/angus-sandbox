@@ -1,0 +1,143 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "create-channel-{{.Release.Name}}"
+  labels:
+    app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+    app.kubernetes.io/instance: {{.Release.Name | quote }}
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+    # "helm.sh/hook-delete-timeout": "10"
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: create-channel-block
+          image: hyperledger/fabric-tools:1.4.4
+          command: ["configtxgen"]
+          args: ["-profile","DevSingleMSPChannel","-configPath","/etc/hyperledger/fabric/config","-outputCreateChannelTx","/etc/hyperledger/fabric/block/general-channel.tx","-channelID","general"]
+          env:
+            - name: FABRIC_CFG_PATH
+              value: /etc/hyperledger/fabric/config
+            - name: CORE_PEER_LOCALMSPID
+              value: {{ .Values.MSPName }}
+            - name: CORE_PEER_MSPCONFIGPATH
+              value: /etc/hyperledger/fabric/msp
+            - name: CORE_PEER_ADDRESS
+              value: {{ .Values.CORE_PEER_ADDRESS }} 
+            - name: FABRIC_LOGGING_SPEC
+              value: INFO                             
+          volumeMounts:
+            - name: block
+              mountPath: /etc/hyperledger/fabric/block        
+            - name: localmsp-org
+              mountPath: /etc/hyperledger/fabric/msp                
+            - name: config
+              mountPath: /etc/hyperledger/fabric/config
+        - name: create-anchor-block
+          image: hyperledger/fabric-tools:1.4.4
+          command: ["configtxgen"]
+          args: ["-profile","DevSingleMSPChannel","-configPath","/etc/hyperledger/fabric/config","-outputAnchorPeersUpdate","/etc/hyperledger/fabric/block/PeerMSPanchors.tx","-channelID","general","-asOrg","PeerMSP"]
+          env:
+            - name: FABRIC_CFG_PATH
+              value: /etc/hyperledger/fabric/config
+            - name: CORE_PEER_LOCALMSPID
+              value: {{ .Values.MSPName }}
+            - name: CORE_PEER_MSPCONFIGPATH
+              value: /etc/hyperledger/fabric/msp
+            - name: CORE_PEER_ADDRESS
+              value: {{ .Values.CORE_PEER_ADDRESS }} 
+            - name: FABRIC_LOGGING_SPEC
+              value: INFO                             
+          volumeMounts:
+            - name: block
+              mountPath: /etc/hyperledger/fabric/block        
+            - name: localmsp-org
+              mountPath: /etc/hyperledger/fabric/msp                
+            - name: config
+              mountPath: /etc/hyperledger/fabric/config
+        - name: create-peer-channel
+          image: hyperledger/fabric-tools:1.4.4
+          command: ["peer"]
+          args: ["channel","create","-o","orderer:7050","-c","general","-f","/etc/hyperledger/fabric/block/general-channel.tx","--outputBlock","/etc/hyperledger/fabric/block/general.block"]
+          env:
+            - name: FABRIC_CFG_PATH
+              value: /etc/hyperledger/fabric/config
+            - name: CORE_PEER_LOCALMSPID
+              value: {{ .Values.MSPName }}
+            - name: CORE_PEER_MSPCONFIGPATH
+              value: /etc/hyperledger/fabric/msp
+            - name: CORE_PEER_ADDRESS
+              value: {{ .Values.CORE_PEER_ADDRESS }} 
+            - name: FABRIC_LOGGING_SPEC
+              value: INFO                             
+          volumeMounts:
+            - name: block
+              mountPath: /etc/hyperledger/fabric/block         
+            - name: localmsp-peeradmin
+              mountPath: /etc/hyperledger/fabric/msp                
+            - name: config
+              mountPath: /etc/hyperledger/fabric/config
+        - name: join-peer-channel
+          image: hyperledger/fabric-tools:1.4.4
+          command: ["peer"]
+          args: ["channel","join","-o","orderer:7050","-b","/etc/hyperledger/fabric/block/general.block"]
+          env:
+            - name: FABRIC_CFG_PATH
+              value: /etc/hyperledger/fabric/config
+            - name: CORE_PEER_LOCALMSPID
+              value: {{ .Values.MSPName }}
+            - name: CORE_PEER_MSPCONFIGPATH
+              value: /etc/hyperledger/fabric/msp
+            - name: CORE_PEER_ADDRESS
+              value: {{ .Values.CORE_PEER_ADDRESS }} 
+            - name: FABRIC_LOGGING_SPEC
+              value: INFO                             
+          volumeMounts:
+            - name: block
+              mountPath: /etc/hyperledger/fabric/block         
+            - name: localmsp-peeradmin
+              mountPath: /etc/hyperledger/fabric/msp                
+            - name: config
+              mountPath: /etc/hyperledger/fabric/config
+      volumes:
+        - name: block
+          emptyDir: {}    
+        - name: localmsp-org
+          configMap:
+            name: {{ .Release.Name }}-configmap
+            items:
+              - key: ca-cert.pem
+                path: cacerts/ca.dev.angus.net-cert.pem
+              - key: PeerAdmin-cert.pem
+                path: admincerts/Admin
+        - name: localmsp-peeradmin
+          configMap:
+            name: {{ .Release.Name }}-configmap
+            items:
+              - key: ca-cert.pem
+                path: cacerts/ca.dev.angus.net-cert.pem
+              - key: PeerAdmin-cert.pem
+                path: admincerts/Admin
+              - key: PeerAdmin-cert.pem
+                path: signcerts/Admin
+              - key: PeerAdmin-key.pem
+                path: keystore/Admin
+        - name: config
+          configMap:
+            name: {{ .Release.Name }}-configmap
+            items:
+              - key: configtx.yaml
+                path: configtx.yaml
+              - key: core.yaml
+                path: core.yaml
+            
+            

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: fabric-bundle
+description: Predefined Hyperledger Fabric 2.0 environment for Angus
+type: application
+version: 0.1.0
+appVersion: 1.16.0
