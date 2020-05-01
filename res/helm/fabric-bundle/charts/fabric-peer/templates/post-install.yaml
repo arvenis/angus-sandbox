@@ -116,7 +116,7 @@ spec:
             name: {{ .Release.Name }}-configmap
             items:
               - key: ca-cert.pem
-                path: cacerts/ca.dev.angusy.net-cert.pem
+                path: cacerts/ca.dev.angus.net-cert.pem
               - key: PeerAdmin-cert.pem
                 path: admincerts/Admin
         - name: localmsp-peeradmin
@@ -124,7 +124,7 @@ spec:
             name: {{ .Release.Name }}-configmap
             items:
               - key: ca-cert.pem
-                path: cacerts/ca.dev.angusy.net-cert.pem
+                path: cacerts/ca.dev.angus.net-cert.pem
               - key: PeerAdmin-cert.pem
                 path: admincerts/Admin
               - key: PeerAdmin-cert.pem
