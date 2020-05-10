@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderer
+spec:
+  selector:
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }} 
+  type: NodePort
+  clusterIP: 10.101.10.2
+  ports:
+    - name: listen-endpoint
+      protocol: TCP
+      port: 7050
+      targetPort: 7050

@@ -1,0 +1,2 @@
+MSPName: PeerMSP
+CORE_PEER_ADDRESS: peer0:7051

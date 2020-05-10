@@ -1,6 +1,6 @@
 #!/bin/bash
 MINIKUBE_RELEASE=v1.8.2
-NODE_RELEASE=10.x
+NODE_RELEASE=12.x
 HELM_RELEASE=3.0.0
 
 # Suppress warning messages
@@ -29,7 +29,7 @@ echo "*** Set yarn repository ***"
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
-# Set node repository
+# Install nvm and node
 echo "*** Set nodejs repository ***"
 curl -sL https://deb.nodesource.com/setup_$NODE_RELEASE -o nodesource_setup.sh
 bash nodesource_setup.sh
