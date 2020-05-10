@@ -1,6 +1,6 @@
 General:
 #    LedgerType: file
-    ListenAddress: 127.0.0.1
+    ListenAddress: 0.0.0.0
     ListenPort: 7050
     TLS:
         Enabled: false

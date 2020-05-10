@@ -110,7 +110,8 @@ spec:
               mountPath: /etc/hyperledger/fabric/config
       volumes:
         - name: block
-          emptyDir: {}    
+          hostPath:
+            path: /data/{{ .Values.peerName }}/block             
         - name: localmsp-org
           configMap:
             name: {{ .Release.Name }}-configmap

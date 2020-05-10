@@ -43,14 +43,14 @@ spec:
               value: {{ .Values.ORDERER_GENERAL_LOGLEVEL }}
             - name: FABRIC_LOGGING_SPEC
               value: {{ .Values.FABRIC_LOGGING_SPEC }}
-            - name: ORDERER_GENERAL_LISTENADDRESS
-              value: 0.0.0.0
             - name: ORDERER_GENERAL_BOOTSTRAPFILE
               value: /etc/hyperledger/fabric/block/orderer.genesis.block
             - name: ORDERER_GENERAL_LOCALMSPID
               value: {{ .Values.MSPName }}
             - name: ORDERER_GENERAL_LOCALMSPDIR
               value: /etc/hyperledger/fabric/msp
+            - name: ORDERER_FILELEDGER_LOCATION
+              value: /etc/hyperledger/fabric/ledger
           workingDir: /etc/hyperledger/fabric
           ports:
           - containerPort: 7050
@@ -58,13 +58,19 @@ spec:
           volumeMounts:
             - name: block
               mountPath: /etc/hyperledger/fabric/block
+            - name: ledger
+              mountPath: /etc/hyperledger/fabric/ledger
             - name: localmsp
               mountPath: /etc/hyperledger/fabric/msp
             - name: config
               mountPath: /etc/hyperledger/fabric/config
       volumes:
         - name: block
-          emptyDir: {}
+          hostPath:
+            path: /data/{{ .Values.ordererName }}/block
+        - name: ledger
+          hostPath:
+            path: /data/{{ .Values.ordererName }}/ledger                   
         - name: localmsp
         # TODO: convert it to secret
           configMap:

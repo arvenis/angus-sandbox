@@ -3,7 +3,7 @@ peer:
     networkId: dev
     listenAddress: 0.0.0.0:7051
     address: 0.0.0.0:7051
-    addressAutoDetect: false
+    addressAutoDetect: true
     gomaxprocs: -1
     keepalive:
         minInterval: 60s
@@ -184,7 +184,7 @@ chaincode:
 ledger:
   blockchain:
   state:
-    stateDatabase: goleveldb
+    stateDatabase: CouchDB
     totalQueryLimit: 100000
     couchDBConfig:
        couchDBAddress: 127.0.0.1:5984
