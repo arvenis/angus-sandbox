@@ -3,10 +3,9 @@ Vagrant.configure("2") do |config|
     config.vm.hostname = "angus-vm"
     config.vm.define "angus-vm"
   
-    # If you have more than one vagrant image, the default ssh port (2222) may used.
+    # If you have more than one vagrant image, the default ssh port (2222) may already sed.
     # To avoid the error uncomment this line by setting the 'host' parameter to a free port
     # config.vm.network "forwarded_port", guest: 22, host: 2220, id: "ssh"
-    config.vm.network "forwarded_port", guest: 8888, host: 8888
     config.vm.provider "virtualbox" do |vb|
       # OSX workaround - disable microphone access
       vb.customize ["modifyvm", :id, "--audio", "none"]
