@@ -15,6 +15,7 @@ These vagrant plugins are optional but can be useful:
 - vagrant-vbguest
 - vagrant-scp
 - vagrant-disksize
+
 You can install these via `vagrant plugin install PLUGIN_NAME` command.
 
 # Install
