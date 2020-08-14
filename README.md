@@ -1,7 +1,7 @@
 # Angus sandbox
 
-This is a virtual environment which reduces radically the time spent HLF chaincode development.
-It contains a well-configured HLF in a working Minikube cluster and other relavant stuff.
+This is a virtual environment which radically reduces the time spent HLF chaincode development.
+It contains a well-configured HLF in a working Minikube cluster and other relevant stuff.
 
 ## Requirements
 
@@ -24,16 +24,14 @@ You can install these via `vagrant plugin install PLUGIN_NAME` command.
 3. Grab a coffee
 4. Login to vm via `vagrant ssh`
 5. Verify whether the HLF was started properly:
-- 
-```
+- ```
 minikube status
 host: Running
 kubelet: Running
 apiserver: Running
 kubeconfig: Configured
 ```
-- 
-```
+- ```
 fcli peer channel list
 2020-08-14 09:47:43.938 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 Channels peers has joined:
