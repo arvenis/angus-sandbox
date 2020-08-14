@@ -23,16 +23,18 @@ You can install these via `vagrant plugin install PLUGIN_NAME` command.
 2. Run `vagrant up` 
 3. Grab a coffee
 4. Login to vm via `vagrant ssh`
-5. Verify whether the HLF was started properly:
-- ```
-minikube status
+5. Verify whether the HLF was started properly: 
+- Checking cluster
+```
+$ minikube status
 host: Running
 kubelet: Running
 apiserver: Running
 kubeconfig: Configured
 ```
-- ```
-fcli peer channel list
+- Checking default channel
+```
+$ fcli peer channel list
 2020-08-14 09:47:43.938 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 Channels peers has joined:
 general
